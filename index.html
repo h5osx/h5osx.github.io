@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>H5OSX</title>
     <link rel="stylesheet" href="css/os.css"/>
+    <link rel="stylesheet" href="css/loading.css"/>
     <link rel="stylesheet" href="css/login.css"/>
 </head>
 <body>
@@ -41,12 +42,15 @@
 </div>
 <div class="mask">
     <div class="login">
-        <input type="text">
-        <input type="password"/>
-        <button id="btn_login">login</button>
+        <div class="user_login_face_border">
+            <img class="user_login_face" src="icons/user.png" alt=""/>
+        </div>
+        <input id="login_user_name" class="login_user_name" type="text">
+        <input id="login_user_pass" class="login_user_pass" type="password"/>
+        <button id="btn_login" class="btn_login">login</button>
     </div>
-    <div class="loading">
-        <img src="icons/loading.png" width="100" alt=""/>
+    <div id="loading" class="loading">
+        <img id="loading_icon" class="loading_icon_rotating" src="icons/loading.png" width="100" alt=""/>
     </div>
 </div>
 <script src="js/c.js"></script>

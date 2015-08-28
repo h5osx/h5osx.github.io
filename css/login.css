@@ -1,3 +1,11 @@
+@-webkit-keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 .login{
     position: absolute;
     top: 0;
@@ -5,10 +13,36 @@
     left: 0;
     right: 0;
     width: 300px;
-    height: 100px;
+    height: 220px;
     padding: 10px;
     background-color: #ccc;
     margin: auto;
     border-radius: 10px;
     display: none;
+    -webkit-animation: show 1.5s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
+
+}
+.user_login_face_border {
+    width: 10vw;
+    height: 10vw;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #fff;
+    border: solid 2px #f2f2f2;
+}
+.user_login_face {
+    width: 120%;
+    height: 120%;
+    margin: 10px 10px 0 -10px;
+}
+.login_user_name,.login_user_pass{
+    width: 280px;
+    height: 20px;
+    line-height: 20px;
+    margin: 10px auto;
+    padding: 10px;
+}
+.btn_login{
+    width: 300px;
+    height: 30px;
 }

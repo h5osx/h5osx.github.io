@@ -54,6 +54,14 @@ __.prototype={
         }
         return this;
     },
+    className:function(v){
+        if(v===undefined){
+            return this._return("className");
+        }else{
+            this.attr('class',v);
+        }
+        return this;
+    },
     html:function(v){
         if(v===undefined){
             return this._return("innerHTML");
@@ -75,6 +83,14 @@ __.prototype={
 
             e.addEventListener(eventFn,function(){
                 event.preventDefault();
+                fn();
+            });
+        });
+    },
+    aniend:function(fn){
+        this._set(function(e){
+            e.addEventListener('webkitAnimationEnd',function(){
+                //event.preventDefault();
                 fn();
             });
         });

@@ -12,24 +12,7 @@
     right: 0;
     background-color: rgba(0,0,0,1);
 }
-.loading {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-}
-.loading:after{
-    content: "loading...";
-    position: absolute;
-    text-align: center;
-    color: #fff;
-    width: 100px;
-    top: 120px;
-}
+
 .task_pan {
     position: fixed;
     bottom: 0;
