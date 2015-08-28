@@ -12,12 +12,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-    width: 300px;
-    height: 220px;
-    padding: 10px;
+    width: 50vw;
+    height: 32vw;
+    padding: 1vw;
     background-color: #ccc;
     margin: auto;
-    border-radius: 10px;
+    border-radius: 2vw;
     display: none;
     -webkit-animation: show 1.5s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
 
@@ -36,13 +36,21 @@
     margin: 10px 10px 0 -10px;
 }
 .login_user_name,.login_user_pass{
-    width: 280px;
-    height: 20px;
-    line-height: 20px;
-    margin: 10px auto;
-    padding: 10px;
+    width: 48vw;
+    height: 3vw;
+    line-height: 3vw;
+    margin: 1vw auto;
+    padding: 1vw;
+    border-radius: 1vw;
+
 }
 .btn_login{
-    width: 300px;
-    height: 30px;
+    width: 50vw;
+    height: 6vw;
+    margin-top: 1vw;
+    line-height: 6vw;
+    background: yellowgreen;
+    color: #000;
+    font-size: 3vw;
+    border-radius: 1vw;
 }
