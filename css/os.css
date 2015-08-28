@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+.mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,1);
+}
+.loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+}
+.loading:after{
+    content: "loading...";
+    position: absolute;
+    text-align: center;
+    color: #fff;
+    width: 100px;
+    top: 120px;
+}
+.task_pan {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    height:5vw;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px 10px 0 0;
+}
+.pin_icon_on_task_border{
+    width: 5vw;
+    height: 5vw;
+    margin-right: 0.5vw;
+    position: relative;
+    float: left;
+}
+.pin_icon_on_task{
+    width: 4vw;
+    height: 4vw;
+    margin: auto;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.pin_icon_on_task:hover{
+    width: 4.5vw;
+    height: 4.5vw;
+}
