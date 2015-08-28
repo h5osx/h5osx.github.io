@@ -60,3 +60,30 @@
 .to_close{
     -webkit-animation: closing 1s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
 }
+@-webkit-keyframes ani_show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.ani_show{
+    -webkit-animation: ani_show 0.5s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
+
+}
+@-webkit-keyframes ani_dou {
+    from {
+        left: -3vw;
+    }
+    50%{
+        left:0;
+    }
+    to {
+        left: 3vw;
+    }
+}
+
+.ani_dou{
+    -webkit-animation: ani_dou 0.1s cubic-bezier(0,0,1,1) 0s 3 normal;/*alternate*/
+}

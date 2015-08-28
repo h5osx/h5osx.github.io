@@ -94,6 +94,15 @@ __.prototype={
                 fn();
             });
         });
+    },
+    val:function(v){
+        if(v===undefined){
+            return this._return('value');
+        }else{
+            this._set(function(e){
+                e.value=v;
+            });
+        }
     }
 }
 
