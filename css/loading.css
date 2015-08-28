@@ -34,15 +34,3 @@
     width: 100px;
     top: 120px;
 }
-@-webkit-keyframes loading_closing {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-.loading_close{
-    -webkit-animation: loading_closing 1.5s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
-}

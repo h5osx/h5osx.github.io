@@ -19,7 +19,7 @@
     margin: auto;
     border-radius: 2vw;
     display: none;
-    -webkit-animation: show 1.5s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
+    -webkit-animation: show 0.5s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
 
 }
 .user_login_face_border {

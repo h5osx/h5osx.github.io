@@ -41,8 +41,22 @@
     bottom: 0;
     left: 0;
     right: 0;
+    -webkit-transition:all 0.05s;
 }
 .pin_icon_on_task:hover{
     width: 4.5vw;
     height: 4.5vw;
+}
+
+@-webkit-keyframes closing {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.to_close{
+    -webkit-animation: closing 1s cubic-bezier(0,0,1,1) 0s 1 normal;/*alternate*/
 }
