@@ -106,3 +106,47 @@ __.prototype={
     }
 }
 
+_.setJsValue=function(value){
+    _.jsValue=value;
+}
+_.getjs=function(url,arr,cb,error){
+    _.jsValue='nojsvaluexxx';
+
+    var js_url="?";
+
+    for (var name in arr) {
+        if (arr.hasOwnProperty(name)) {
+            js_url+="&";
+            js_url+=name;
+            js_url+="=";
+            js_url+=arr[name];
+            console.log(arr[name])
+        }
+    }
+    js_url=url+js_url+"&cb=_.setJsValue";
+    //console.log(js_url);
+
+    var importScript = (function (oHead) {
+
+        function loadError (oError) {
+            error();
+            throw new URIError("The script " + oError.target.src + " is not accessible.");
+        }
+
+        return function (sSrc, fOnload) {
+
+            var oScript = document.createElement("script");
+            oScript.type = "text\/javascript";
+            oScript.onerror = loadError;
+            if (fOnload) { oScript.onload = function(){
+                fOnload(_.jsValue);
+            }; }
+            oHead.appendChild(oScript);
+            oScript.src = sSrc;
+        }
+    })(document.head || document.getElementsByTagName("head")[0]);
+    importScript(js_url,cb);
+    /*
+     _.getjs('http://www.heimasheying.com/user_count.php',{},function(x){alert(x)},function(){alert('err')})
+     */
+}
