@@ -137,9 +137,11 @@ _.getjs=function(url,arr,cb,error){
 
             var oScript = document.createElement("script");
             oScript.type = "text\/javascript";
+
             oScript.onerror = loadError;
             if (fOnload) { oScript.onload = function(){
                 fOnload(_.jsValue);
+                oHead.removeChild(oScript);
             }; }
             oHead.appendChild(oScript);
             oScript.src = sSrc;
