@@ -50,15 +50,14 @@
 <p>
     <span class="name">Browser</span><span class="value" id="browser"></span>
 </p>
-<span id="type"></span>
-<span id="version"></span>
-
+<span id="ua"></span>
 
 <script>
     ;
     (function () {
         var ua = navigator.userAgent;
         console.log(ua);
+        document.getElementById('ua').innerHTML = ua;
         var s = '';
         //latform
         switch (true) {
