@@ -123,8 +123,12 @@
                 document.getElementById('browser').innerHTML = 'NokiaBrowser / ' + s[1];
                 document.getElementById('os').innerHTML = 'NokiaN9';
                 document.getElementById('Platform').innerHTML = 'NokiaN9(mobile)';
-
-
+                break;
+            case((s = ua.match(/CriOS[\/]([\d.]+)/)) != null):
+                document.getElementById('browser').innerHTML = 'Chrome / ' + s[1];
+                break;
+            case((s = ua.match(/MicroMessenger[\/]([\d.]+)/)) != null):
+                document.getElementById('browser').innerHTML = 'MicroMessenger / ' + s[1];
                 break;
             case((s = ua.match(/Safari[\/]([\d.]+)/)) != null):
                 document.getElementById('browser').innerHTML = 'Safari / ' + s[1];
