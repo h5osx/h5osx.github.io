@@ -83,7 +83,7 @@ __.prototype={
 
             e.addEventListener(eventFn,function(){
                 event.preventDefault();
-                fn();
+                fn(e);
             });
         });
     },

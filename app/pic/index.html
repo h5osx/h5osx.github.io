@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>pic</title>
+    <meta name="viewport" content="initial-scale=2.0,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="style.css"/>
+    <script src="../../js/c.js"></script>
+    <script src="pic.js"></script>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div class="pan">
+    <img src="icons/tank.png" alt="" class="icon"/>
+</div>
+<script>
+    window.onload=function(){
+        initpic();
+
+        _('.icon').click(function($this){
+            console.log($this.src);
+            add_objs($this.src);
+        });
+    }
+</script>
+</body>
+</html>
