@@ -49,32 +49,20 @@ function initpic() {
                 break;
             case 'gesturestart':
 
-                gesture_ratation=event.ratation;
-                gesture_scale=event.scale;
+
 
                 console.log('gesturestart');
 
-                console.log(gesture_ratation);
-                console.log(gesture_scale);
+
                 break;
             case 'gestureend':
-                gesture_ratation=event.ratation;
-                gesture_scale=event.scale;
-
                 console.log('gestureend');
 
-                console.log(gesture_ratation);
-                console.log(gesture_scale);
                 break;
             case 'gesturechange':
                 gesture_ratation=event.ratation;
                 gesture_scale=event.scale;
-                console.log('gesturechange');
-                console.log(gesture_ratation);
-                console.log(gesture_scale);
-
-
-
+                console.log(event);
                 break;
         }
     }
