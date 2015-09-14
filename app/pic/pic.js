@@ -49,7 +49,7 @@ function initpic() {
                 break;
             case 'gesturestart':
 
-
+                gesture_scale=event.scale;
 
                 console.log('gesturestart');
 
@@ -61,14 +61,14 @@ function initpic() {
                 break;
             case 'gesturechange':
                 if (select != null) {
-                    if(event.ratation>gesture_ratation){
+                    if(event.scale>gesture_scale){
                         select.w-=1;
                         select.h-=1;
                     }else{
                         select.w+=1;
                         select.h+=1;
                     }
-                    gesture_ratation=event.ratation;
+                    gesture_scale=event.scale;
                 }
 
 
