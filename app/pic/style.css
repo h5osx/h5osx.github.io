@@ -10,3 +10,15 @@
     right: 0;
     height: 10vw;
 }
+.icons{
+    z-index: 99;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+
+}
+.icon{
+    width:40px;
+    height: 40px;
+}
