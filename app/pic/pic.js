@@ -88,17 +88,6 @@ function initpic() {
     canvas.addEventListener('gesturechange', handleEvent, false);
     c = canvas.getContext('2d');
     objs.length = 0;
-    setInterval(function () {
-        c.fillStyle = "#ff0000";
-        //c.fillRect(0, 0, canvas.width, canvas.height);
-        c.clearRect(0, 0, canvas.width, canvas.height);
-
-        objs.map(function (obj) {
-            c.drawImage(obj.i, obj.x, obj.y, obj.w, obj.h);
-        });
-
-
-    }, 10);
 }
 var objs = [];
 
@@ -126,14 +115,9 @@ function updateScreen(time) {
     c.fillRect(0, 0, 10, 10);
     requestID = window.requestAnimationFrame(updateScreen);
 }
-
-
 function startUpdateScreen() {
     requestID = window.requestAnimationFrame(updateScreen);
 }
 function stopUpdateScreen() {
     window.cancelAnimationFrame(requestID);
 }
-
-
-ready_img = null;
