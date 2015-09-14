@@ -60,7 +60,20 @@ function initpic() {
 
                 break;
             case 'gesturechange':
-                gesture_ratation=event.ratation;
+                if (select != null) {
+                    if(event.ratation>gesture_ratation){
+                        select.w-=1;
+                        select.h-=1;
+                    }else{
+                        select.w+=1;
+                        select.h+=1;
+                    }
+                    gesture_ratation=event.ratation;
+                }
+
+
+
+
                 gesture_scale=event.scale;
                 console.log(event);
                 break;
