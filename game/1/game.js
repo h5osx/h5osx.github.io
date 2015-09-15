@@ -26,11 +26,11 @@ function handleEvent(event) {
             var y = touch_y;
             select = null;
 
-                if (player.x - player.w / 2 < x && player.x + player.w / 2 > x && player.y - player.h / 2 < y && player.y + player.h / 2 > y) {
-                    select = player;
-                    cha_x = touch_x - select.x;
-                    cha_y = touch_y - select.y;
-                }
+            if (player.x - player.w / 2 < x && player.x + player.w / 2 > x && player.y - player.h / 2 < y && player.y + player.h / 2 > y) {
+                select = player;
+                cha_x = touch_x - select.x;
+                cha_y = touch_y - select.y;
+            }
 
             break;
         case 'touchmove':
@@ -38,7 +38,6 @@ function handleEvent(event) {
             var touch = event.touches[0]; //获取第一个触点
             touch_x = Number(touch.pageX); //页面触点X坐标
             touch_y = Number(touch.pageY); //页面触点Y坐标
-            console.log("move");
             if (select != null) {
                 select.x = touch_x - cha_x;
                 select.y = touch_y - cha_y;
@@ -66,17 +65,22 @@ canvas.addEventListener('gesturestart', handleEvent, false);
 
 
 var objs = [];
+var obj_fires = [];
+var play_fires = [];
+
 objs.length = 0;
 
+over=false;
+
 var res = [];
-var loaded=0;
+var loaded = 0;
 function load_img(role, src) {
     var img = new Image();
     img.src = src;
     img.setAttribute('role', role);
     img.onload = function () {
         res[this.getAttribute('role')] = this;
-        loaded+=1;
+        loaded += 1;
     }
 }
 
@@ -95,7 +99,7 @@ function add_obj(role, x, y, w, h) {
 function init_player() {
     var x = center_x;
     var y = height - 50;
-    player={
+    player = {
         role: 'player',
         x: x,
         y: y,
@@ -106,7 +110,10 @@ function init_player() {
 }
 
 timer = 0;
+
+
 function updateScreen(time) {
+
 
     timer += 1;
     if (timer === 100) {
@@ -118,67 +125,104 @@ function updateScreen(time) {
 
     c.clearRect(0, 0, canvas.width, canvas.height);
     objs.map(function (obj, index, objs) {
-        /*
-         if (obj === select) {
-         c.strokeStyle = "#ff0000";
-         c.lineWidth = 2;
-         c.strokeRect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
-         }
-         */
 
-        switch (obj.role){
-            case 'player_fire':
-                obj.y-=1;
-                if (obj.y<-10) {
-                    objs.splice(index, 1);
+        if (obj.x > 0 && obj.y > 0) {
+            objs.map(function (one, index, arr) {
+                if (one.x > 0 && one.y > 0) {
+                    onCollide(obj, one, function () {
+                        gameover();
+                    })
                 }
-                break;
-            case 'ie':
-                obj.y += 1;
-                if (obj.y > height + obj.h) {
-                    objs.splice(index, 1);
-                }
-                break;
+            });
+        }
+
+
+        obj.y += 1;
+        if (obj.y > height + obj.h) {
+            objs.splice(index, 1);
         }
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
+
     });
+
+
+    obj_fires.map(function (obj, index, objs) {
+    });
+
+    play_fires.map(function (obj, index, objs) {
+
+
+        obj.y -= 3;
+        if (obj.y < -10) {
+            objs.splice(index, 1);
+        }
+
+        c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
+
+    });
+
     c.drawImage(player.i, player.x - player.w / 2, player.y - player.h / 2, player.w, player.h);
+
     c.fillStyle = "#ff0000";
     c.fillRect(0, 0, 10, 10);
+
+    console.log(requestID);
+
     requestID = window.requestAnimationFrame(updateScreen);
+
+    if(over){
+        window.cancelAnimationFrame(requestID);
+    }
 }
+
+function onCollide(obj_1, obj_2, fn) {
+    if (obj_1 != obj_2) {
+        var xx = Math.abs(obj_1.x - obj_2.x);
+        var yy = Math.abs(obj_1.y - obj_2.y);
+        var ww = (obj_1.w + obj_2.w) / 2;
+        var hh = (obj_1.y + obj_2.y) / 2;
+        if (xx < ww && yy < hh) {
+            fn();
+        }
+    }
+}
+
 function startUpdateScreen() {
     requestID = window.requestAnimationFrame(updateScreen);
 }
 function stopUpdateScreen() {
     window.cancelAnimationFrame(requestID);
 }
-function load_finish(){
+function load_finish() {
 
 }
-function check_load(){
-    if(loaded===res_count){
+function check_load() {
+    if (loaded === res_count) {
         load_finish();
-    }else{
+    } else {
         requestID = window.requestAnimationFrame(check_load);
     }
 }
 
-function ready(fn){
-    load_finish=fn;
+function ready(fn) {
+    load_finish = fn;
     requestID = window.requestAnimationFrame(check_load);
 }
 /**/
 
 load_img('ie', 'ie.png');
 load_img('player', 'chrome.png');
-res_count=2;
-ready(function(){
+res_count = 2;
+ready(function () {
     console.log('finish')
     init_player();
     startUpdateScreen();
 });
 
-
-
+function restart() {
+    startUpdateScreen();
+}
+function gameover() {
+    over=true;
+}
 
