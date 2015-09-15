@@ -1,6 +1,6 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-var width = window.innerWidth;
-var height = window.innerHeight;
+width = window.innerWidth;
+height = window.innerHeight;
 var canvas = document.createElement('canvas');
 c = canvas.getContext('2d');
 canvas.width = width;
@@ -25,13 +25,13 @@ function handleEvent(event) {
             var x = touch_x;
             var y = touch_y;
             select = null;
-            objs.map(function (obj) {
-                if (obj.x - obj.w / 2 < x && obj.x + obj.w / 2 > x && obj.y - obj.h / 2 < y && obj.y + obj.h / 2 > y) {
-                    select = obj;
+
+                if (player.x - player.w / 2 < x && player.x + player.w / 2 > x && player.y - player.h / 2 < y && player.y + player.h / 2 > y) {
+                    select = player;
                     cha_x = touch_x - select.x;
                     cha_y = touch_y - select.y;
                 }
-            });
+
             break;
         case 'touchmove':
             event.preventDefault();
@@ -47,30 +47,75 @@ function handleEvent(event) {
         case 'touchend':
             event.preventDefault();
             break;
+        case 'gesturestart':
+            objs.push({
+                role: 'player_fire',
+                x: touch_x,
+                y: touch_y,
+                w: 10,
+                h: 10,
+                i: res['player']
+            });
+            break;
     }
 }
 canvas.addEventListener('touchstart', handleEvent, false);
 canvas.addEventListener('touchmove', handleEvent, false);
 canvas.addEventListener('touchend', handleEvent, false);
+canvas.addEventListener('gesturestart', handleEvent, false);
 
 
 var objs = [];
 objs.length = 0;
-function add_obj(src) {
+
+var res = [];
+var loaded=0;
+function load_img(role, src) {
     var img = new Image();
     img.src = src;
+    img.setAttribute('role', role);
     img.onload = function () {
-        objs.push({
-            x: center_x,
-            y: center_y,
-            w: this.width,
-            h: this.height,
-            i: this
-        });
+        res[this.getAttribute('role')] = this;
+        loaded+=1;
     }
 }
+
+function add_obj(role, x, y, w, h) {
+    var i = res[role];
+    objs.push({
+        role: role,
+        x: x,
+        y: y,
+        w: w,
+        h: h,
+        i: i
+    });
+}
+
+function init_player() {
+    var x = center_x;
+    var y = height - 50;
+    player={
+        role: 'player',
+        x: x,
+        y: y,
+        w: 50,
+        h: 50,
+        i: res['player']
+    };
+}
+
+timer = 0;
 function updateScreen(time) {
-    
+
+    timer += 1;
+    if (timer === 100) {
+        var x = Math.floor(Math.random() * width);
+        var y = -100;
+        add_obj('ie', x, y, 30, 30);
+        timer = 0;
+    }
+
     c.clearRect(0, 0, canvas.width, canvas.height);
     objs.map(function (obj, index, objs) {
         /*
@@ -80,8 +125,24 @@ function updateScreen(time) {
          c.strokeRect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
          }
          */
+
+        switch (obj.role){
+            case 'player_fire':
+                obj.y-=1;
+                if (obj.y<-10) {
+                    objs.splice(index, 1);
+                }
+                break;
+            case 'ie':
+                obj.y += 1;
+                if (obj.y > height + obj.h) {
+                    objs.splice(index, 1);
+                }
+                break;
+        }
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
     });
+    c.drawImage(player.i, player.x - player.w / 2, player.y - player.h / 2, player.w, player.h);
     c.fillStyle = "#ff0000";
     c.fillRect(0, 0, 10, 10);
     requestID = window.requestAnimationFrame(updateScreen);
@@ -92,3 +153,32 @@ function startUpdateScreen() {
 function stopUpdateScreen() {
     window.cancelAnimationFrame(requestID);
 }
+function load_finish(){
+
+}
+function check_load(){
+    if(loaded===res_count){
+        load_finish();
+    }else{
+        requestID = window.requestAnimationFrame(check_load);
+    }
+}
+
+function ready(fn){
+    load_finish=fn;
+    requestID = window.requestAnimationFrame(check_load);
+}
+/**/
+
+load_img('ie', 'ie.png');
+load_img('player', 'chrome.png');
+res_count=2;
+ready(function(){
+    console.log('finish')
+    init_player();
+    startUpdateScreen();
+});
+
+
+
+
