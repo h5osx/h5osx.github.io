@@ -18,7 +18,9 @@ function initpic() {
         switch (event.type) {
             case 'touchstart':
                 event.preventDefault();
-                if (!gesture) {
+
+                if (!gesture&&!touch) {
+                    touch=true;
                     var touch = event.touches[0]; //获取第一个触点
                     touch_x = Number(touch.pageX); //页面触点X坐标
                     touch_y = Number(touch.pageY); //页面触点Y坐标
@@ -37,7 +39,8 @@ function initpic() {
                 break;
             case 'touchmove':
                 event.preventDefault();
-                if (!gesture) {
+                if (!gesture&&!touch) {
+                    touch=true;
                     var touch = event.touches[0]; //获取第一个触点
                     touch_x = Number(touch.pageX); //页面触点X坐标
                     touch_y = Number(touch.pageY); //页面触点Y坐标
@@ -50,6 +53,7 @@ function initpic() {
                 break;
             case 'touchend':
                 event.preventDefault();
+                touch=false;
                 break;
             case 'gesturestart':
                 event.preventDefault();
@@ -61,11 +65,11 @@ function initpic() {
                 event.preventDefault();
                 if (select != null) {
                     if (event.scale > gesture_scale) {
-                        select.w += 1;
-                        select.h += 1;
+                        select.w += 5;
+                        select.h += 5;
                     } else {
-                        select.w -= 1;
-                        select.h -= 1;
+                        select.w -= 5;
+                        select.h -= 5;
                     }
                     gesture_scale = event.scale;
                 }
