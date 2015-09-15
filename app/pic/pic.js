@@ -1,8 +1,8 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 function initpic() {
-    select=null;
-    gesture=false;
+    select = null;
+    gesture = false;
     var width = window.innerWidth;
     var height = window.innerHeight;
     canvas = document.getElementById('canvas');
@@ -26,9 +26,9 @@ function initpic() {
                 var touch = event.touches[0]; //获取第一个触点
                 touch_x = Number(touch.pageX); //页面触点X坐标
                 touch_y = Number(touch.pageY); //页面触点Y坐标
-                if(select){
-                    cha_x = x - select.x;
-                    cha_y = y - select.y;
+                if (select != null) {
+                    cha_x = touch_x - select.x;
+                    cha_y = touch_y - select.y;
                 }
                 break;
             case 'touchmove':
@@ -119,9 +119,9 @@ function add_obj(src) {
 function updateScreen(time) {
     c.clearRect(0, 0, canvas.width, canvas.height);
     objs.map(function (obj, index, objs) {
-        if(obj===select){
-            c.strokeStyle="#ff0000";
-            c.lineWidth=2;
+        if (obj === select) {
+            c.strokeStyle = "#ff0000";
+            c.lineWidth = 2;
             c.strokeRect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
         }
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
