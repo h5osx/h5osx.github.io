@@ -70,7 +70,7 @@ var play_fires = [];
 
 objs.length = 0;
 
-over=false;
+over = false;
 
 var res = [];
 var loaded = 0;
@@ -146,16 +146,27 @@ function updateScreen(time) {
     });
 
 
-    obj_fires.map(function (obj, index, objs) {
+    obj_fires.map(function (obj, index, obj_fires) {
+
     });
 
-    play_fires.map(function (obj, index, objs) {
+    play_fires.map(function (obj, index, play_fires) {
 
 
         obj.y -= 3;
         if (obj.y < -10) {
             objs.splice(index, 1);
         }
+
+        objs.map(function (one, index, arr) {
+
+            onCollide(obj, one, function () {
+                arr.splice(index,1);
+                objs.splice(index,1);
+            })
+
+        });
+
 
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
 
@@ -167,8 +178,6 @@ function updateScreen(time) {
     c.fillRect(0, 0, 10, 10);
 
     console.log(requestID);
-
-
 
 
 }
