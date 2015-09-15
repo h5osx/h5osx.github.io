@@ -15,7 +15,6 @@ document.body.appendChild(canvas);
 gesture = false;
 select = null;
 function handleEvent(event) {
-    console.log(event.type);
     switch (event.type) {
         case 'touchstart':
             event.preventDefault();
@@ -113,8 +112,8 @@ timer = 0;
 
 
 function updateScreen(time) {
-    requestID = window.requestAnimationFrame(updateScreen);
 
+    requestID = window.requestAnimationFrame(updateScreen);
     timer += 1;
     if (timer === 100) {
         var x = Math.floor(Math.random() * width);
@@ -126,71 +125,72 @@ function updateScreen(time) {
     c.clearRect(0, 0, canvas.width, canvas.height);
     objs.map(function (obj, index, objs) {
 
-        if (obj.x > 0 && obj.y > 0) {
-            objs.map(function (one, index, arr) {
-                if (one.x > 0 && one.y > 0) {
-                    onCollide(obj, one, function () {
-                        gameover();
-                    })
-                }
-            });
-        }
-
 
         obj.y += 1;
         if (obj.y > height + obj.h) {
             objs.splice(index, 1);
         }
-        c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
 
-    });
-
-
-    obj_fires.map(function (obj, index, obj_fires) {
-
-    });
-
-    play_fires.map(function (obj, index, play_fires) {
-
-
-        obj.y -= 3;
-        if (obj.y < -10) {
-            objs.splice(index, 1);
-        }
-
-        objs.map(function (one, index, arr) {
-
-            onCollide(obj, one, function () {
-                arr.splice(index,1);
-                objs.splice(index,1);
-            })
-
-        });
-
+        onCollide(obj, player, function () {
+            gameover();
+        })
 
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
 
     });
+    /*
+
+     obj_fires.map(function (obj, index, obj_fires) {
+
+     });
+
+     play_fires.map(function (obj, index, play_fires) {
+
+
+     obj.y -= 3;
+     if (obj.y < -10) {
+     objs.splice(index, 1);
+     }
+
+     objs.map(function (one, index, arr) {
+
+     onCollide(obj, one, function () {
+     arr.splice(index, 1);
+     objs.splice(index, 1);
+     })
+
+     });
+
+
+     c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
+
+     });
+     */
 
     c.drawImage(player.i, player.x - player.w / 2, player.y - player.h / 2, player.w, player.h);
 
     c.fillStyle = "#ff0000";
     c.fillRect(0, 0, 10, 10);
 
-    console.log(requestID);
-
 
 }
 
 function onCollide(obj_1, obj_2, fn) {
     if (obj_1 != obj_2) {
-        var xx = Math.abs(obj_1.x - obj_2.x);
-        var yy = Math.abs(obj_1.y - obj_2.y);
-        var ww = (obj_1.w + obj_2.w) / 2;
-        var hh = (obj_1.y + obj_2.y) / 2;
-        if (xx < ww && yy < hh) {
-            fn();
+        if (obj_1.x > 0 && obj_1.y > 0) {
+            if (obj_2.x > 0 && obj_2.y > 0) {
+                var xx = Math.abs(obj_1.x - obj_2.x);
+                var yy = Math.abs(obj_1.y - obj_2.y);
+
+
+                if (xx < obj_1.width / 2 || xx < obj_2.width / 2) {
+                    if (yy < obj_1.height / 2 || yy < obj_2.height / 2) {
+                        fn();
+                    }
+                }
+            }
         }
+
     }
 }
 
@@ -221,7 +221,6 @@ load_img('ie', 'ie.png');
 load_img('player', 'chrome.png');
 res_count = 2;
 ready(function () {
-    console.log('finish')
     init_player();
     startUpdateScreen();
 });
@@ -230,6 +229,7 @@ function restart() {
     startUpdateScreen();
 }
 function gameover() {
+    console.log('over')
     window.cancelAnimationFrame(requestID);
 }
 
