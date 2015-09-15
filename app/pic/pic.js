@@ -1,7 +1,6 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 function initpic() {
-    select = null;
     gesture = false;
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -20,7 +19,6 @@ function initpic() {
         switch (event.type) {
             case 'touchstart':
                 event.preventDefault();
-                touch = true;
 
 
                 var touch = event.touches[0]; //获取第一个触点
@@ -33,7 +31,7 @@ function initpic() {
                 break;
             case 'touchmove':
                 event.preventDefault();
-                if (!gesture && !touch) {
+                if (!gesture) {
 
                     var touch = event.touches[0]; //获取第一个触点
                     touch_x = Number(touch.pageX); //页面触点X坐标
@@ -62,7 +60,6 @@ function initpic() {
             case 'gesturestart':
                 event.preventDefault();
                 gesture = true;
-                touch = true;
                 gesture_scale = event.scale;
                 console.log('gesturestart');
                 break;
@@ -85,6 +82,7 @@ function initpic() {
                 event.preventDefault();
                 console.log('gestureend');
                 gesture = false;
+                select = null;
                 break;
         }
     }
