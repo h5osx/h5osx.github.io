@@ -26,8 +26,10 @@ function initpic() {
                 var touch = event.touches[0]; //获取第一个触点
                 touch_x = Number(touch.pageX); //页面触点X坐标
                 touch_y = Number(touch.pageY); //页面触点Y坐标
-
-
+                if(select){
+                    cha_x = x - select.x;
+                    cha_y = y - select.y;
+                }
                 break;
             case 'touchmove':
                 event.preventDefault();
@@ -51,8 +53,7 @@ function initpic() {
                 objs.map(function (obj) {
                     if (obj.x - obj.w / 2 < x && obj.x + obj.w / 2 > x && obj.y - obj.h / 2 < y && obj.y + obj.h / 2 > y) {
                         select = obj;
-                        cha_x = x - select.x;
-                        cha_y = y - select.y;
+
                         console.log("on obj")
                     }
                 });
