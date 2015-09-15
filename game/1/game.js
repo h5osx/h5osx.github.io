@@ -113,7 +113,7 @@ timer = 0;
 
 
 function updateScreen(time) {
-
+    requestID = window.requestAnimationFrame(updateScreen);
 
     timer += 1;
     if (timer === 100) {
@@ -168,11 +168,9 @@ function updateScreen(time) {
 
     console.log(requestID);
 
-    requestID = window.requestAnimationFrame(updateScreen);
 
-    if(over){
-        window.cancelAnimationFrame(requestID);
-    }
+
+
 }
 
 function onCollide(obj_1, obj_2, fn) {
@@ -223,6 +221,6 @@ function restart() {
     startUpdateScreen();
 }
 function gameover() {
-    over=true;
+    window.cancelAnimationFrame(requestID);
 }
 
