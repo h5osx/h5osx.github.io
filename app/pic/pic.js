@@ -42,6 +42,9 @@ function initpic() {
                         select.x = touch_x - cha_x;
                         select.y = touch_y - cha_y;
                     }
+
+
+
                 }
                 break;
             case 'touchend':

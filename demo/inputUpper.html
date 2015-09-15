@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<date>2015-09-15</date>
+<h2>输入小写变大写（能看到小写变为大写的过程）</h2>
+<input type="text" onkeyup="toUpper();"/>
+
+<h2>输入小写变大写 直接输入的就是大写</h2>
+<input type="text" onkeydown="toUpperStart();" onkeyup="toUpperStop();"/>
+
+<h2>传统的onkeydown取到的是之前的值</h2>
+<input type="text" onkeydown="toUpperB();"/>
+<script>
+    function toUpper() {
+        event.target.value = event.target.value.toUpperCase();
+    }
+</script>
+<script>
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    function toUpperStart() {
+        var e = event.target;
+
+        function run(time) {
+            e.value = e.value.toUpperCase();
+            requestID = window.requestAnimationFrame(run);
+        }
+
+        requestID = window.requestAnimationFrame(run);
+        console.log(event.target.value)
+    }
+    function toUpperStop() {
+        window.cancelAnimationFrame(requestID);
+    }
+    function toUpperB() {
+        event.target.value = event.target.value.toUpperCase();
+        console.log(event.target.value);
+    }
+</script>
+
+</body>
+</html>
