@@ -2,6 +2,7 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 
 function initpic() {
     gesture = false;
+    select = null;
     var width = window.innerWidth;
     var height = window.innerHeight;
     canvas = document.getElementById('canvas');
