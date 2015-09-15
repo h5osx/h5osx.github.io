@@ -68,11 +68,11 @@ function initpic() {
                 event.preventDefault();
                 if (select != null) {
                     if (event.scale > gesture_scale) {
-                        select.w += 5;
-                        select.h += 5;
+                        select.w += 2;
+                        select.h += 2;
                     } else {
-                        select.w -= 5;
-                        select.h -= 5;
+                        select.w -= 2;
+                        select.h -= 2;
                     }
                     gesture_scale = event.scale;
                 }
