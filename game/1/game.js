@@ -183,8 +183,15 @@ function onCollide(obj_1, obj_2, fn) {
                 var yy = Math.abs(obj_1.y - obj_2.y);
 
 
-                if (xx < obj_1.width / 2 || xx < obj_2.width / 2) {
-                    if (yy < obj_1.height / 2 || yy < obj_2.height / 2) {
+                console.log(obj_1.x +"-"+ obj_2.x+"="+xx);
+                console.log(obj_1.y +"-"+ obj_2.y+"="+yy);
+
+
+                if (xx < obj_1.w / 2 || xx < obj_2.w / 2) {
+                    console.log('in xx')
+                    if (yy < obj_1.h / 2 || yy < obj_2.h / 2) {
+                        console.log('in yy')
+
                         fn();
                     }
                 }
