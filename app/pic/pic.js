@@ -18,30 +18,34 @@ function initpic() {
         switch (event.type) {
             case 'touchstart':
                 event.preventDefault();
-                var touch = event.touches[0]; //获取第一个触点
-                touch_x = Number(touch.pageX); //页面触点X坐标
-                touch_y = Number(touch.pageY); //页面触点Y坐标
-                var x = touch_x;
-                var y = touch_y;
-                select = null;
-                objs.map(function (obj) {
-                    if (obj.x - obj.w / 2 < x && obj.x + obj.w / 2 > x && obj.y - obj.h / 2 < y && obj.y + obj.h / 2 > y) {
-                        select = obj;
-                        cha_x = x - select.x;
-                        cha_y = y - select.y;
-                        console.log("on obj")
-                    }
-                });
+                if (!gesture) {
+                    var touch = event.touches[0]; //获取第一个触点
+                    touch_x = Number(touch.pageX); //页面触点X坐标
+                    touch_y = Number(touch.pageY); //页面触点Y坐标
+                    var x = touch_x;
+                    var y = touch_y;
+                    select = null;
+                    objs.map(function (obj) {
+                        if (obj.x - obj.w / 2 < x && obj.x + obj.w / 2 > x && obj.y - obj.h / 2 < y && obj.y + obj.h / 2 > y) {
+                            select = obj;
+                            cha_x = x - select.x;
+                            cha_y = y - select.y;
+                            console.log("on obj")
+                        }
+                    });
+                }
                 break;
             case 'touchmove':
                 event.preventDefault();
-                var touch = event.touches[0]; //获取第一个触点
-                touch_x = Number(touch.pageX); //页面触点X坐标
-                touch_y = Number(touch.pageY); //页面触点Y坐标
-                console.log("move");
-                if (select != null) {
-                    select.x = touch_x - cha_x;
-                    select.y = touch_y - cha_y;
+                if (!gesture) {
+                    var touch = event.touches[0]; //获取第一个触点
+                    touch_x = Number(touch.pageX); //页面触点X坐标
+                    touch_y = Number(touch.pageY); //页面触点Y坐标
+                    console.log("move");
+                    if (select != null) {
+                        select.x = touch_x - cha_x;
+                        select.y = touch_y - cha_y;
+                    }
                 }
                 break;
             case 'touchend':
@@ -49,31 +53,29 @@ function initpic() {
                 break;
             case 'gesturestart':
                 event.preventDefault();
-                gesture_scale=event.scale;
-
+                gesture = true;
+                gesture_scale = event.scale;
                 console.log('gesturestart');
-
-
-                break;
-            case 'gestureend':
-                event.preventDefault();
-                console.log('gestureend');
-
                 break;
             case 'gesturechange':
                 event.preventDefault();
                 if (select != null) {
-                    if(event.scale>gesture_scale){
-                        select.w+=1;
-                        select.h+=1;
-                    }else{
-                        select.w-=1;
-                        select.h-=1;
+                    if (event.scale > gesture_scale) {
+                        select.w += 1;
+                        select.h += 1;
+                    } else {
+                        select.w -= 1;
+                        select.h -= 1;
                     }
-                    gesture_scale=event.scale;
+                    gesture_scale = event.scale;
                 }
-                gesture_scale=event.scale;
+                gesture_scale = event.scale;
                 console.log(event);
+                break;
+            case 'gestureend':
+                event.preventDefault();
+                console.log('gestureend');
+                gesture = false;
                 break;
         }
     }
