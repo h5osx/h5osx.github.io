@@ -143,7 +143,7 @@ function updateScreen(time) {
 
         obj.y -= 3;
         if (obj.y < -10) {
-            objs.splice(index, 1);
+            play_fires.splice(index, 1);
         }
 
         objs.map(function (one, i, arr) {
