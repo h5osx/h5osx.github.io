@@ -135,18 +135,23 @@ function updateScreen(time) {
     });
 
 
+
     obj_fire_time+=1;
-    if(obj_fire_time===20){
+    if(obj_fire_time===50){
         obj_fire_time=0;
-        var tmp_index=Math.floor(Math.random()*objs.length);
-        obj_fires.push({
-            role: 'obj_fires',
-            x: objs[tmp_index].x,
-            y: objs[tmp_index].y,
-            w: 10,
-            h: 10,
-            i: res['ie']
-        });
+        if(objs.length>0){
+            var tmp_index=Math.floor(Math.random()*(objs.length-1));
+            console.log(objs);
+            obj_fires.push({
+                role: 'obj_fires',
+                x: objs[tmp_index].x,
+                y: objs[tmp_index].y,
+                w: 10,
+                h: 10,
+                i: res['ie']
+            });
+        }
+
     }
 
     obj_fires.map(function (obj, index, obj_fires) {
