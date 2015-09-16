@@ -146,10 +146,10 @@ function updateScreen(time) {
             objs.splice(index, 1);
         }
 
-        objs.map(function (one, index, arr) {
+        objs.map(function (one, i, arr) {
 
             onCollide(obj, one, function () {
-                arr.splice(index, 1);
+                arr.splice(i, 1);
                 objs.splice(index, 1);
             })
 
