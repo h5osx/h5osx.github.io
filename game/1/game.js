@@ -1,7 +1,11 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 width = window.innerWidth;
 height = window.innerHeight;
-var canvas = document.createElement('canvas');
+canvas = document.createElement('canvas');
+canvas.style.margin=0;
+canvas.style.padding=0;
+document.body.style.margin=0;
+document.body.style.padding=0;
 c = canvas.getContext('2d');
 canvas.width = width;
 canvas.height = height;
@@ -112,6 +116,8 @@ timer = 0;
 
 obj_fire_time=0;
 
+die_ie=0;//死掉的ie数量
+
 function updateScreen(time) {
     requestID = window.requestAnimationFrame(updateScreen);
     timer += 1;
@@ -163,6 +169,7 @@ function updateScreen(time) {
 
     });
 
+    /*开火*/
     player_fires.map(function (obj, index, play_fires) {
 
 
@@ -176,6 +183,7 @@ function updateScreen(time) {
             onCollide(obj, one, function () {
                 arr.splice(i, 1);
                 play_fires.splice(index, 1);
+                die_ie+=1;//消灭一个ie
             })
 
         });
@@ -197,8 +205,10 @@ function updateScreen(time) {
 
     c.drawImage(player.i, player.x - player.w / 2, player.y - player.h / 2, player.w, player.h);
 
-    c.fillStyle = "#ff0000";
-    c.fillRect(0, 0, 10, 10);
+    c.font="20px Arial";
+    c.fillStyle="#ff0000";
+    c.fillText("已经消灭 "+die_ie+" 个IE",20,20);
+
 
 
 }
@@ -255,6 +265,13 @@ function restart() {
     startUpdateScreen();
 }
 function gameover() {
+    c.fillStyle="#000000";
+    c.globalAlpha=0.5;
+    c.fillRect(0,0,width,height);
+    c.globalAlpha=1;
+    c.font="30px Arial";
+    c.fillStyle="#ff0000";
+    c.fillText("Game Over",width/2-270/2,height/2-15);
     console.log('over')
     window.cancelAnimationFrame(requestID);
 }
