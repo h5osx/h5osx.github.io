@@ -46,7 +46,7 @@ function handleEvent(event) {
             event.preventDefault();
             break;
         case 'gesturestart':
-            objs.push({
+            player_fires.push({
                 role: 'player_fire',
                 x: touch_x,
                 y: touch_y,
@@ -65,7 +65,7 @@ canvas.addEventListener('gesturestart', handleEvent, false);
 
 var objs = [];
 var obj_fires = [];
-var play_fires = [];
+var player_fires = [];
 
 objs.length = 0;
 
@@ -112,7 +112,6 @@ timer = 0;
 
 
 function updateScreen(time) {
-
     requestID = window.requestAnimationFrame(updateScreen);
     timer += 1;
     if (timer === 100) {
@@ -121,51 +120,46 @@ function updateScreen(time) {
         add_obj('ie', x, y, 30, 30);
         timer = 0;
     }
-
     c.clearRect(0, 0, canvas.width, canvas.height);
     objs.map(function (obj, index, objs) {
-
-
         obj.y += 1;
         if (obj.y > height + obj.h) {
             objs.splice(index, 1);
         }
-
         onCollide(obj, player, function () {
             gameover();
         })
+        c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
+
+    });
+
+
+    obj_fires.map(function (obj, index, obj_fires) {
+
+    });
+
+    player_fires.map(function (obj, index, play_fires) {
+
+
+        obj.y -= 3;
+        if (obj.y < -10) {
+            objs.splice(index, 1);
+        }
+
+        objs.map(function (one, index, arr) {
+
+            onCollide(obj, one, function () {
+                arr.splice(index, 1);
+                objs.splice(index, 1);
+            })
+
+        });
+
 
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
 
     });
-    /*
 
-     obj_fires.map(function (obj, index, obj_fires) {
-
-     });
-
-     play_fires.map(function (obj, index, play_fires) {
-
-
-     obj.y -= 3;
-     if (obj.y < -10) {
-     objs.splice(index, 1);
-     }
-
-     objs.map(function (one, index, arr) {
-
-     onCollide(obj, one, function () {
-     arr.splice(index, 1);
-     objs.splice(index, 1);
-     })
-
-     });
-
-
-     c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
-
-     });
-     */
 
     c.drawImage(player.i, player.x - player.w / 2, player.y - player.h / 2, player.w, player.h);
 
@@ -181,17 +175,8 @@ function onCollide(obj_1, obj_2, fn) {
             if (obj_2.x > 0 && obj_2.y > 0) {
                 var xx = Math.abs(obj_1.x - obj_2.x);
                 var yy = Math.abs(obj_1.y - obj_2.y);
-
-
-                console.log(obj_1.x +"-"+ obj_2.x+"="+xx);
-                console.log(obj_1.y +"-"+ obj_2.y+"="+yy);
-
-
                 if (xx < obj_1.w / 2 || xx < obj_2.w / 2) {
-                    console.log('in xx')
                     if (yy < obj_1.h / 2 || yy < obj_2.h / 2) {
-                        console.log('in yy')
-
                         fn();
                     }
                 }
