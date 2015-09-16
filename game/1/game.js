@@ -48,8 +48,8 @@ function handleEvent(event) {
         case 'gesturestart':
             player_fires.push({
                 role: 'player_fire',
-                x: touch_x,
-                y: touch_y,
+                x: player.x,
+                y: player.y,
                 w: 10,
                 h: 10,
                 i: res['player']
@@ -110,6 +110,7 @@ function init_player() {
 
 timer = 0;
 
+obj_fire_time=0;
 
 function updateScreen(time) {
     requestID = window.requestAnimationFrame(updateScreen);
@@ -121,6 +122,7 @@ function updateScreen(time) {
         timer = 0;
     }
     c.clearRect(0, 0, canvas.width, canvas.height);
+
     objs.map(function (obj, index, objs) {
         obj.y += 1;
         if (obj.y > height + obj.h) {
@@ -130,11 +132,29 @@ function updateScreen(time) {
             gameover();
         })
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
-
     });
 
 
+    obj_fire_time+=1;
+    if(obj_fire_time===20){
+        obj_fire_time=0;
+        var tmp_index=Math.floor(Math.random()*objs.length);
+        obj_fires.push({
+            role: 'obj_fires',
+            x: objs[tmp_index].x,
+            y: objs[tmp_index].y,
+            w: 10,
+            h: 10,
+            i: res['ie']
+        });
+    }
+
     obj_fires.map(function (obj, index, obj_fires) {
+        obj.y+=2;
+        onCollide(obj, player, function () {
+            gameover();
+        })
+        c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
 
     });
 
