@@ -180,6 +180,15 @@ function updateScreen(time) {
 
         });
 
+        obj_fires.map(function (one, i, arr) {
+
+            onCollide(obj, one, function () {
+                arr.splice(i, 1);
+                play_fires.splice(index, 1);
+            })
+
+        });
+
 
         c.drawImage(obj.i, obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h);
 
