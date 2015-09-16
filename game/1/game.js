@@ -150,7 +150,7 @@ function updateScreen(time) {
 
             onCollide(obj, one, function () {
                 arr.splice(i, 1);
-                objs.splice(index, 1);
+                play_fires.splice(index, 1);
             })
 
         });
