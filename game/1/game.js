@@ -2,10 +2,10 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 width = window.innerWidth;
 height = window.innerHeight;
 canvas = document.createElement('canvas');
-canvas.style.margin=0;
-canvas.style.padding=0;
-document.body.style.margin=0;
-document.body.style.padding=0;
+canvas.style.margin = 0;
+canvas.style.padding = 0;
+document.body.style.margin = 0;
+document.body.style.padding = 0;
 c = canvas.getContext('2d');
 canvas.width = width;
 canvas.height = height;
@@ -18,6 +18,7 @@ document.body.appendChild(canvas);
 
 gesture = false;
 select = null;
+
 function handleEvent(event) {
     switch (event.type) {
         case 'touchstart':
@@ -27,6 +28,14 @@ function handleEvent(event) {
             touch_y = Number(touch.pageY); //页面触点Y坐标
             var x = touch_x;
             var y = touch_y;
+            if (requestID === 0) {
+                if (c.isPointInPath(x, y)) {
+
+                    restart();
+                }
+            }
+
+
             select = null;
 
             if (player.x - player.w / 2 < x && player.x + player.w / 2 > x && player.y - player.h / 2 < y && player.y + player.h / 2 > y) {
@@ -71,9 +80,6 @@ var objs = [];
 var obj_fires = [];
 var player_fires = [];
 
-objs.length = 0;
-
-over = false;
 
 var res = [];
 var loaded = 0;
@@ -112,11 +118,6 @@ function init_player() {
     };
 }
 
-timer = 0;
-
-obj_fire_time=0;
-
-die_ie=0;//死掉的ie数量
 
 function updateScreen(time) {
     requestID = window.requestAnimationFrame(updateScreen);
@@ -141,13 +142,11 @@ function updateScreen(time) {
     });
 
 
-
-    obj_fire_time+=1;
-    if(obj_fire_time===50){
-        obj_fire_time=0;
-        if(objs.length>0){
-            var tmp_index=Math.floor(Math.random()*(objs.length-1));
-            console.log(objs);
+    obj_fire_time += 1;
+    if (obj_fire_time === 50) {
+        obj_fire_time = 0;
+        if (objs.length > 0) {
+            var tmp_index = Math.floor(Math.random() * (objs.length - 1));
             obj_fires.push({
                 role: 'obj_fires',
                 x: objs[tmp_index].x,
@@ -161,7 +160,7 @@ function updateScreen(time) {
     }
 
     obj_fires.map(function (obj, index, obj_fires) {
-        obj.y+=2;
+        obj.y += 2;
         onCollide(obj, player, function () {
             gameover();
         })
@@ -183,7 +182,7 @@ function updateScreen(time) {
             onCollide(obj, one, function () {
                 arr.splice(i, 1);
                 play_fires.splice(index, 1);
-                die_ie+=1;//消灭一个ie
+                die_ie += 1;//消灭一个ie
             })
 
         });
@@ -205,10 +204,9 @@ function updateScreen(time) {
 
     c.drawImage(player.i, player.x - player.w / 2, player.y - player.h / 2, player.w, player.h);
 
-    c.font="20px Arial";
-    c.fillStyle="#ff0000";
-    c.fillText("已经消灭 "+die_ie+" 个IE",20,20);
-
+    c.font = "20px Arial";
+    c.fillStyle = "#ff0000";
+    c.fillText("已经消灭 " + die_ie + " 个IE", 20, 20);
 
 
 }
@@ -251,28 +249,47 @@ function ready(fn) {
     load_finish = fn;
     requestID = window.requestAnimationFrame(check_load);
 }
+function gameover() {
+    c.fillStyle = "#000000";
+    c.globalAlpha = 0.5;
+    c.fillRect(0, 0, width, height);
+    c.globalAlpha = 1;
+    c.font = "30px Arial";
+    c.fillStyle = "#ff0000";
+    c.fillText("Game Over", width / 2 - 270 / 2, height / 2 - 15);
+    window.cancelAnimationFrame(requestID);
+    requestID = 0;
+
+    c.fillStyle = "#ff0000";
+    c.beginPath();
+    c.fillStyle = "#ff0000";
+    c.rect(10, height - 100, width - 20, 90);
+    c.fill();
+    c.closePath();
+    c.font = "30px Arial";
+    c.fillStyle = "#ffffff";
+    c.fillText("restart", 30, height - 60);
+
+}
 /**/
 
 load_img('ie', 'ie.png');
 load_img('player', 'chrome.png');
 res_count = 2;
 ready(function () {
-    init_player();
-    startUpdateScreen();
+
+    restart();
 });
 
 function restart() {
+    init_player();
+    objs.length = 0;
+    obj_fires.length = 0;
+    player_fires.length = 0;
+    timer = 0;
+    obj_fire_time = 0;
+    die_ie = 0;//死掉的ie数量
     startUpdateScreen();
 }
-function gameover() {
-    c.fillStyle="#000000";
-    c.globalAlpha=0.5;
-    c.fillRect(0,0,width,height);
-    c.globalAlpha=1;
-    c.font="30px Arial";
-    c.fillStyle="#ff0000";
-    c.fillText("Game Over",width/2-270/2,height/2-15);
-    console.log('over')
-    window.cancelAnimationFrame(requestID);
-}
+
 
